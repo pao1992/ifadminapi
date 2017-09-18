@@ -127,8 +127,14 @@ Route::get('api/:version/system', 'api/:version.System/getSummary');
 Route::put('api/:version/system', 'api/:version.System/updateOne');
 Route::post('api/:version/system/logo', 'api/:version.System/updateLogo');
 
-
-
+//card
+Route::get('api/:version/card', 'api/:version.Card/getAllCards');
+Route::get('api/:version/card/:id', 'api/:version.Card/getCardById',[], ['id'=>'\d+']);
+Route::post('api/:version/card', 'api/:version.Card/createOne');
+Route::put('api/:version/card/:id', 'api/:version.Card/updateOne',[], ['id'=>'\d+']);
+Route::delete('api/:version/card/:id', 'api/:version.Card/deleteOne',[], ['id'=>'\d+']);
+Route::post('api/:version/cardBinding', 'api/:version.Card/binding');//卡绑定用户
+Route::delete('api/:version/cardBinding', 'api/:version.Card/binding');//卡解绑用户
 
 
 
