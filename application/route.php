@@ -62,8 +62,8 @@ Route::delete('api/:version/userCoupon/:id', 'api/:version.UserCoupon/deleteOne'
 //user
 Route::get('api/:version/user/:id', 'api/:version.User/getUserById',[],['id'=>'\d+']);
 Route::get('api/:version/user', 'api/:version.User/getAllUsers');
-
-
+Route::post('api/:version/user/by_filter', 'api/:version.User/getUserByFilter');
+Route::post('api/:version/user/by_card/:id', 'api/:version.User/getUserByCard',[],['id'=>'\d+']);
 
 
 
@@ -128,13 +128,24 @@ Route::put('api/:version/system', 'api/:version.System/updateOne');
 Route::post('api/:version/system/logo', 'api/:version.System/updateLogo');
 
 //card
-Route::get('api/:version/card', 'api/:version.Card/getAllCards');
-Route::get('api/:version/card/:id', 'api/:version.Card/getCardById',[], ['id'=>'\d+']);
-Route::post('api/:version/card', 'api/:version.Card/createOne');
-Route::put('api/:version/card/:id', 'api/:version.Card/updateOne',[], ['id'=>'\d+']);
-Route::delete('api/:version/card/:id', 'api/:version.Card/deleteOne',[], ['id'=>'\d+']);
-Route::post('api/:version/cardBinding', 'api/:version.Card/binding');//卡绑定用户
-Route::delete('api/:version/cardBinding', 'api/:version.Card/binding');//卡解绑用户
+//Route::get('api/:version/card', 'api/:version.Card/getAllCards');
+//Route::get('api/:version/card/:id', 'api/:version.Card/getCardById',[], ['id'=>'\d+']);
+//Route::post('api/:version/card', 'api/:version.Card/createOne');
+//Route::put('api/:version/card/:id', 'api/:version.Card/updateOne',[], ['id'=>'\d+']);
+//Route::delete('api/:version/card/:id', 'api/:version.Card/deleteOne',[], ['id'=>'\d+']);
+//Route::post('api/:version/cardBinding', 'api/:version.Card/binding');//卡绑定用户
+//Route::delete('api/:version/cardBinding', 'api/:version.Card/binding');//卡解绑用户
+Route::post('api/:version/card/get_user_by_filter', 'api/:version.User/getUserByFilter');//获取该卡下的用户数据
+Route::group('api/:version/card',function(){
+    Route::get('', 'api/:version.Card/getAllCards');
+    Route::get('/:id', 'api/:version.Card/getCardById',[], ['id'=>'\d+']);
+    Route::post('', 'api/:version.Card/createOne');
+    Route::delete('/:id', 'api/:version.Card/deleteOne',[], ['id'=>'\d+']);
+
+    //卡下用户
+    Route::post('/:id/bind_user/:user_id', 'api/:version.Card/bindUser',[],['id'=>'\d+','user_id'=>'\d+']);//新增关联
+    Route::get('/:id/user', 'api/:version.Card/getusers',[],['id'=>'\d+']);//查询用户
+});
 
 
 

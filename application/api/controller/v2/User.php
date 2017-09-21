@@ -28,4 +28,17 @@ class User extends BaseController
         $res = UserModel::getAllUsers();
         return $res;
     }
+    public function getUserByFilter(){
+        $filter = input('post.');
+        //此处可能需要验证传入的参数是否合法
+        $res = UserModel::getUserByFilter($filter);
+        return $res;
+    }
+    public function getUserByCard($card_id){
+        $filter = input('post.');
+        (new IDMustBePositiveInt())->check($card_id);
+        //此处可能需要验证传入的参数是否合法
+        $res = UserModel::getUserByCard($card_id,$filter);
+        return $res;
+    }
 }

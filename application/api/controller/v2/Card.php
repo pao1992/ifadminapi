@@ -58,6 +58,31 @@ class Card extends BaseController
         }
     }
 
+    public function getUsers($id){
+        (new IDMustBePositiveInt())->check($id);
+        $filter = input('get.');
+        $res = CardModel::getUsers($id,$filter);
+        return $res;
+    }
+    public function getDiffUsers($id){
+        (new IDMustBePositiveInt())->check($id);
+        $filter = input('get.');
+        $res = CardModel::getUsers($id,$filter);
+        return $res;
+    }
+    public function bindUser($id,$user_id){
+        (new IDMustBePositiveInt())->check($id);
+        (new IDMustBePositiveInt())->check($user_id);
+        $res = CardModel::bindUser($id,$user_id);
+        if($res){
+            return new SuccessMessage([
+                'code' => 201,
+                'msg' => '次卡创建成功'
+            ]);
+        }else{
+            throw new BaseException();
+        }
+    }
     public function getCouponsByDate($date)
     {
         $date = strtotime($date);

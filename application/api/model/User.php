@@ -38,8 +38,18 @@ class User extends BaseModel
             ->find();
         return $user;
     }
+    public static function getUserByFilter($filter){
+        $user = self::where($filter)
+            ->select();
+        return $user;
+    }
     public static function getAllUsers(){
         $users = self::select();
         return $users;
+    }
+    public static function getUserByCard($card_id,$filter){
+        $user = self::where($filter)
+            ->select();
+        return $user;
     }
 }
