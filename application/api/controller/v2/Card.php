@@ -22,6 +22,7 @@ use app\lib\exception\MissException;
 use think\Controller;
 use app\api\validate\PagingParameter;
 use app\api\model\Card as CardModel;
+use app\api\model\UserCard as UserCardModel;
 
 class Card extends BaseController
 {
@@ -83,17 +84,20 @@ class Card extends BaseController
             throw new BaseException();
         }
     }
-    public function getCouponsByDate($date)
-    {
-        $date = strtotime($date);
-        $res = CouponModel::getCouponsByDate($date);
-        return $res;
-    }
-
-    public function getCouponsByReceive($page = 1, $size = 20, $param = '', $content = '')
-    {
-        (new PagingParameter())->goCheck();
-        $res = UserCouponModel::getCouponsByReceive($page, $size, $param, $content);
-        return $res;
+    public function getUserCard($id,$page = 1, $size = 1){
+        $usercards = UserCardModel::getUserCard($id,$page,$size,$filter=array());
+        if ($usercards->isEmpty())
+        {
+            return [
+                'current_page' => $usercards->currentPage(),
+                'data' => []
+            ];
+        }
+        $data = $usercards->toArray();
+        return [
+            'current_page' => $usercards->currentPage(),
+            'data' => $data['data'],
+            'total'=>$usercards->total()
+        ];
     }
 }

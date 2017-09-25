@@ -145,9 +145,19 @@ Route::group('api/:version/card',function(){
     //卡下用户
     Route::post('/:id/bind_user/:user_id', 'api/:version.Card/bindUser',[],['id'=>'\d+','user_id'=>'\d+']);//新增关联
     Route::get('/:id/user', 'api/:version.Card/getusers',[],['id'=>'\d+']);//查询用户
+    //获取该类卡下面的实例卡
+    Route::get('/:id/usercard', 'api/:version.Card/getUserCard',[], ['card_id'=>'\d+']);
+
 });
 
+//次卡
+Route::group('api/:version/card/1',function(){
+    Route::get('/:card_id', 'api/:version.UserCard/getUserCard',[], ['card_id'=>'\d+']);
+//    Route::get('/:id', 'api/:version.Card/getCardById',[], ['id'=>'\d+']);
+//    Route::post('', 'api/:version.Card/createOne');
+//    Route::delete('/:id', 'api/:version.Card/deleteOne',[], ['id'=>'\d+']);
 
+});
 
 
 
