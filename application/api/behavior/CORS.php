@@ -10,13 +10,11 @@
 
 namespace app\api\behavior;
 
-
-use think\Response;
-
 class CORS
 {
     public function appInit(&$params)
     {
+
         $allow_origin = config('setting.allow_origin');
         $origin = isset($_SERVER['HTTP_ORIGIN']) ? $_SERVER['HTTP_ORIGIN'] : '';
         if (in_array($origin, $allow_origin)) {

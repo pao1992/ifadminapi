@@ -37,6 +37,30 @@ class Product extends Controller
         $products = ProductModel::getAllProducts();
         return $products;
     }
+    public function getProductsByFilter(){
+        $filter = input('get.');
+        //过滤不合法空参数
+        $where = $filter;
+        foreach ($filter as $k=>$v){
+            if($v == ''){
+                unset($where[$k]);
+            }
+        }
+        $products = ProductModel::getProductsByFilter($where);
+        return $products;
+//        if ($products->isEmpty())
+//        {
+//            return [
+//                'data' => [],
+//                'total'=>0
+//            ];
+//        }
+//        return [
+//            'data' => $products,
+//            'total'=>Product::
+//        ];
+
+    }
     public function getOne($id){
         (new IDMustBePositiveInt())->goCheck();
         $product = ProductModel::getProductDetail($id);

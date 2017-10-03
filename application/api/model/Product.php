@@ -58,4 +58,28 @@ class Product extends BaseModel
         $products = self::with('events')->where('category_id',$categoryID)->select();
         return $products;
     }
+    public static function getProductsByFilter($where)
+    {
+        $model = new Product();
+
+        //名字采用模糊查询
+        if(isset($where['product_name'])){
+            $where['product_name'] = ['like','%'.$where['product_name'].'%'];
+        }
+        //页码信息
+        if(isset($where['page']) && isset($where['size'])){
+            $page = $where['page'].','.$where['size'];
+        }
+        unset($where['page']);
+        unset($where['size']);
+        $total = $model->where($where)->count();
+        if($page){
+            $model->page($page);
+        }
+        $products = $model->where($where)->select();
+        return array(
+            'data'=>$products,
+            'total'=>$total
+        );
+    }
 }
